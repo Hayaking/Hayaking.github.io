@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hayaking</title>
+  
+  <subtitle>啊啊啊</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2018-02-17T03:33:27.538Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Haya</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/02/24/%E6%9C%AA%E5%91%BD%E5%90%8D/"/>
+    <id>http://yoursite.com/2018/02/24/未命名/</id>
+    <published>2018-02-24T14:54:27.981Z</published>
+    <updated>2018-02-17T03:33:27.538Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h1><p>快速幂算法例子:<br>$5^{16}=25^8=625^4=390625^2=152 587 890 625$<br>$3^{20}=9^{10}=81^5=81<em>81^4=81</em>6561^2=81*43046721=3486784401$</p><p><img src="https://www.zhihu.com/equation?tex=%5Cbegin%7Balign%7D%0Aa%5E0+%26+%3D+1+%5C%5C%0Aa%5EN+%26+%3D+%28a%5Ccdot+a%29%5E%7BN%2F2%7D%2C+N%5Cmod+2%5Cequiv+0+%5C%5C%0Aa%5EN+%26+%3D+a+%5Ccdot+%28a%5Ccdot+a%29%5E%7BN%2F2%7D%2C+N%5Cmod+2%5Cequiv+1%0A%5Cend%7Balign%7D" alt="\begin{align}a^0 &amp; = 1 \\a^N &amp; = (a\cdot a)^{N/2}, N\mod 2\equiv 0 \\a^N &amp; = a \cdot (a\cdot a)^{N/2}, N\mod 2\equiv 1\end{align}"><br>利用二分法能大大加快了求解速度</p><p>代码:</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Power</span><span class="params">(<span class="keyword">int</span> base,<span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span>(index!=<span class="number">0</span>)&#123;</span><br><span class="line"><span class="keyword">if</span>(index%<span class="number">2</span> == <span class="number">1</span>) result =result*base;</span><br><span class="line">base = base* base;</span><br><span class="line">index/=<span class="number">2</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="快速幂求余"><a href="#快速幂求余" class="headerlink" title="快速幂求余:"></a>快速幂求余:</h1><p>$3^{20}\%4=(9\%4)^{10}\%4=5^{10}\%4=(25\%4)^5\%4=1^5\%4 \Rightarrow result=(1*1)\%4=1$</p><p>$6^{13}\%7 \Rightarrow    result =(1<em>6)\%7=6,(36\%7)^6\%7=(1\%7)^3 \Rightarrow result=(6</em>1)\%7=6,1\%7….result=6$</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PowerMod</span><span class="params">(<span class="keyword">int</span> base, <span class="keyword">int</span> index, <span class="keyword">int</span> mod)</span></span>&#123;  </span><br><span class="line"><span class="keyword">int</span> result = <span class="number">1</span>;  </span><br><span class="line">base = base % mod;  </span><br><span class="line"><span class="keyword">while</span>(index!=<span class="number">0</span>)&#123;    </span><br><span class="line"><span class="keyword">if</span>(index%<span class="number">2</span> == <span class="number">1</span>)  result =(result*base)%mod;  </span><br><span class="line">base = (base * base) % mod;  </span><br><span class="line">index /= <span class="number">2</span>;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">return</span> result;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;快速幂&quot;&gt;&lt;a href=&quot;#快速幂&quot; class=&quot;headerlink&quot; title=&quot;快速幂&quot;&gt;&lt;/a&gt;快速幂&lt;/h1&gt;&lt;p&gt;快速幂算法例子:&lt;br&gt;$5^{16}=25^8=625^4=390625^2=152 587 890 625$&lt;br&gt;$3^{20
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2018/02/24/hello-world/"/>
+    <id>http://yoursite.com/2018/02/24/hello-world/</id>
+    <published>2018-02-24T14:32:29.420Z</published>
+    <updated>2018-02-24T14:32:29.421Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
