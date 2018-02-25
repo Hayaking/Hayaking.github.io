@@ -3,11 +3,9 @@
 
 
     
-    
-    
   <url>
-    <loc>http://yoursite.com/2018/02/24/%E6%9C%AA%E5%91%BD%E5%90%8D/</loc>
-    <lastmod>2018-02-24T17:56:29.826Z</lastmod>
+    <loc>http://yoursite.com/2018/02/24/%E5%BF%AB%E9%80%9F%E5%B9%82/</loc>
+    <lastmod>2018-02-25T09:09:11.179Z</lastmod>
     <data>
         <display>
         <title></title>
@@ -19,4 +17,21 @@
     </data>
     </url>
 
+    
+  <url>
+    <loc>http://yoursite.com/2018/02/25/java/</loc>
+    <lastmod>2018-02-25T08:41:43.295Z</lastmod>
+    <data>
+        <display>
+        <title></title>
+        <pubTime>2018-02-25T08:37:34.859Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
 </urlset>
