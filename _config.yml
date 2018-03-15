@@ -14,15 +14,15 @@ filter: 'category'
 recent_num: 20
 
 # Social account
-twitter: suyan404
-weibo: suyan0830
-github: suyan
-instagram: suyan404
-linkedin: suyan404
+twitter: 
+weibo: 
+github: 
+instagram: 
+linkedin: 
 
 # avatar and Favicon
-avatar: http://7u2ho6.com1.z0.glb.clouddn.com/site-avatar.png
-favicon: http://7u2ho6.com1.z0.glb.clouddn.com/site-favicon.ico
+avatar: 
+favicon: 
 
 # disqus config
 disqus:
@@ -30,8 +30,8 @@ disqus:
 
 # google analytics config
 ga:
-  id: UA-54767140-1
-  url: yansu.org
+  id:
+  url: 
 
 # Build settings
 permalink: /:year/:month/:day/:title.html
