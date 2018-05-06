@@ -1,6 +1,6 @@
 # Site settings
 title: HaYaKingdom
-email: 1028777@qq.com
+email: 1028779917@qq.com
 description: > # this means to ignore newlines until "baseurl:"
  HaYaKing的博客
 baseurl: "" # the subpath of your site, e.g. /blog/
@@ -16,12 +16,12 @@ recent_num: 20
 # Social account
 twitter: 
 weibo: 
-github: 
+github: https://github.com/Hayaking
 instagram: 
 linkedin: 
 
 # avatar and Favicon
-avatar: https://ws1.sinaimg.cn/large/84fae4c3ly1fpid3ahov5j20e80e8afm.jpg
+avatar: https://ws1.sinaimg.cn/large/84fae4c3ly1fr1cuofep4j20500503yo.jpg
 favicon: 
 
 # disqus config
