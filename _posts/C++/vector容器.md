@@ -1,6 +1,6 @@
 ---
 title:vector容器
-category: vector
+category: C++
 ---
 
 ## 1.vector:支持快速随机访问
@@ -95,4 +95,3 @@ v.push_back(1);	//正确
 ```
 
 由于v是一个空的vector对象,长度为0,不包含任何元素,因此就不能通过下标访问,赋值!
-
