@@ -1,6 +1,6 @@
 ---
 title:vector容器
-category: C++
+category: Cpp
 ---
 
 ## 1.vector:支持快速随机访问
