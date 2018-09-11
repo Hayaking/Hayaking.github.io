@@ -1,13 +1,15 @@
 ---
 title: 从一个例子学习 instanceof 和 getclass 的区别
-category: java
+layout: post
+category: Java
+tags: [java]
 ---
 
 
 
 判断两个对象是否为同一类型，时常用到getclass 和 instanceof ，而这两个函数又是时常让人混淆。下面从一个例子说明两者的区别：
 
-```
+```java
 public class Test_drive {
     
     public static void main(String[] args){
@@ -33,7 +35,7 @@ class B extends A{ }
 
 同时，在这里必须说明的是，getclass判断的是该变量实际指向的对象的类型（即运行时类型），跟声明该变量的类型无关。即，上面的代码中：
 
-```
+```java
 B b = new B();
 改为
 A a = new B();
