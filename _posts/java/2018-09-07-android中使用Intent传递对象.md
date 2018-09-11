@@ -1,4 +1,9 @@
-# android中使用Intent传递对象
+---
+title: Android中使用Intent传递对象
+layout: post
+category: Java
+tags: [java]
+---
 
 ## 1.Serializable方式
 

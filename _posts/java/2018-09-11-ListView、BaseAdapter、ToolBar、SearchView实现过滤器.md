@@ -1,4 +1,9 @@
-# ListView、BaseAdapter、ToolBar、SearchView实现过滤器
+---
+title: ListView、BaseAdapter、ToolBar、SearchView实现过滤器
+layout: post
+category: Java
+tags: [java]
+---
 
 ## 1. 设置ToolBar
 
