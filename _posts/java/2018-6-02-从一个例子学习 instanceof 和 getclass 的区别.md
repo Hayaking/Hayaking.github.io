@@ -1,6 +1,6 @@
 ---
 title: 从一个例子学习 instanceof 和 getclass 的区别
-
+category: java
 ---
 
 
