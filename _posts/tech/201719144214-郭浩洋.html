@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>2018-10-22-JS dom</title></head>
+<body><h2>访问节点</h2>
+<ul>
+<li>ownerDocument：返回当前节点的根元素（document对象）</li>
+<li>parentNode：返回当前节点的父节点。</li>
+<li>childNodes：返回当前节点的所有子节点的节点列表。</li>
+<li>firstChild：返回当前节点的首个子节点。</li>
+<li>lastChild：返回当前节点的最后一个节点。</li>
+<li>nextSibling：返回当前节点的之后相邻的同级节点。</li>
+<li>previousSibling：返回当前节点的之前相邻的同级节点。</li>
+
+</ul>
+<h2>操作节点</h2>
+<ul>
+<li>appendChild()：向节点的子节点列表中尾部添加新的子节点</li>
+<li>cloneNode()：复制节点</li>
+<li>hasChildNodes()：判断当前节点是否拥有子节点</li>
+<li>insertBefore()：向指定的子节点前插入新的节点</li>
+<li>normalize()：合并相邻的Text节点，并删除空的Text节点</li>
+<li>removeChild()：删除并返回当前节点指定的子节点</li>
+<li>replaceChild()：用新节点替换一个子节点</li>
+
+</ul>
+<h2>访问节点元素</h2>
+<ul>
+<li>getElementByid(id)：通过文档中对应元素的id属性值找到并返回元素，如果指定的id元素找不到，则返回null。</li>
+<li>getElementsByTagName(tagname)：通过指定的标签名称，返回节点集合。</li>
+
+</ul>
+<h2>创建元素</h2>
+<ul>
+<li>createElement(tagname)：根据指定的标签名创建一个新的元素，并返回新建元素的引用。</li>
+
+</ul>
+<p>&nbsp;</p>
+<h2>访问文本节点</h2>
+<ul>
+<li>ele.innerText：获取元素中的文本</li>
+
+</ul>
+<h2>创建文本节点</h2>
+<ul>
+<li>createTextNode(data)：创建包含data字符串的</li>
+
+</ul>
+<h2>读取HTML字符串</h2>
+<ul>
+<li>ele.innerHTML：读取ele标签包含的所有HTML代码</li>
+
+</ul>
+<h2>插入HTML字符串</h2>
+<ul>
+<li><p>insertAdjacentHTML(pos, code)：有两个参数，第一个是插入位置：</p>
+<ol start='' >
+<li>“beforebegin” ：在当前元素之前插入一个紧邻的同级元素</li>
+<li>“afterbegin”：在当前元素之下插入一个子元素，插入到第一个子元素之前</li>
+<li>“beforeend”：在当前元素之下插入一个子元素，插入到第一个子元素之后</li>
+<li>“afterend”：在当前元素之后插入一个紧邻的同级元素</li>
+
+</ol>
+</li>
+
+</ul>
+<p>&nbsp;</p>
+</body>
+</html>
