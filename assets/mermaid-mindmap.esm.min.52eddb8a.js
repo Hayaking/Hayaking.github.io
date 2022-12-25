@@ -1,0 +1,1 @@
+import{_ as r}from"./app.cc92061f.js";import"./framework.5aebfabe.js";const t="mindmap",i=a=>a.match(/^\s*mindmap/)!==null,o=async()=>{const{diagram:a}=await r(()=>import("./diagram-definition.0faef4c2.ff4ceb9c.js"),[]);return{id:t,diagram:a}},e={id:t,detector:i,loader:o};export{e as default};
