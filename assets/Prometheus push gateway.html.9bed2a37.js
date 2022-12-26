@@ -1,0 +1,1 @@
+import{_ as e,V as t,W as _}from"./framework.7aad78ec.js";const r={};function s(a,c){return t(),_("div")}const n=e(r,[["render",s],["__file","Prometheus push gateway.html.vue"]]);export{n as default};
