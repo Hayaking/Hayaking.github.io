@@ -10,7 +10,7 @@ import{_ as n,V as s,W as a,X as e}from"./framework.7aad78ec.js";const i={},o=e(
 <span class="token instruction"><span class="token keyword">RUN</span> go mod download</span>
 
 <span class="token instruction"><span class="token keyword">RUN</span> mkdir -p  /build</span>
-<span class="token instruction"><span class="token keyword">ADD</span> .. /build</span>
+<span class="token instruction"><span class="token keyword">ADD</span> ../../../.. /build</span>
 
 
 <span class="token instruction"><span class="token keyword">WORKDIR</span> /build</span>
