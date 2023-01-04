@@ -1,0 +1,1 @@
+import{_ as l,V as n,W as t,X as e}from"./framework.1bd1ad73.js";const c={},o=e("ul",null,[e("li",null,[e("a",{href:"docker"},"docker")]),e("li",null,[e("a",{href:"k8s"},"k8s")])],-1),s=[o];function r(_,a){return n(),t("div",null,s)}const i=l(c,[["render",r],["__file","index.html.vue"]]);export{i as default};
