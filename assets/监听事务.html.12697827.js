@@ -1,0 +1,64 @@
+import{_ as n,V as s,W as a,Y as e}from"./framework.591e63b2.js";const t={},p=e(`<h2 id="一、背景" tabindex="-1"><a class="header-anchor" href="#一、背景" aria-hidden="true">#</a> 一、背景</h2><p>项目中有很多给客户端发送点对点消息的代码，这些代码很多都被service里被@Transactional修饰的方法调用。</p><p>问题就出在这，有的时候事务可能还没完成提交，点对点消息可能就发出去了，客户端收到消息开始请求接口，请求到了旧数据。</p><p>这种情况就需要考虑将数据库操作与点对点消息进一步解耦了。</p><h2 id="二、transactionsynchronizationmanager" tabindex="-1"><a class="header-anchor" href="#二、transactionsynchronizationmanager" aria-hidden="true">#</a> 二、TransactionSynchronizationManager</h2><p>TransactionSynchronizationManager提供了事务各阶段操作的回调。</p><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TransactionSynchronization</span> <span class="token keyword">extends</span> <span class="token class-name">Flushable</span> <span class="token punctuation">{</span>
+	<span class="token doc-comment comment">/** Completion status in case of proper commit. */</span>
+	<span class="token keyword">int</span> <span class="token constant">STATUS_COMMITTED</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token doc-comment comment">/** Completion status in case of proper rollback. */</span>
+	<span class="token keyword">int</span> <span class="token constant">STATUS_ROLLED_BACK</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token doc-comment comment">/** Completion status in case of heuristic mixed completion or system errors. */</span>
+	<span class="token keyword">int</span> <span class="token constant">STATUS_UNKNOWN</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">suspend</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">resume</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">beforeCommit</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> readOnly<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">beforeCompletion</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">afterCommit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    
+	<span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span><span class="token keyword">int</span> status<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>使用：</p><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token annotation punctuation">@Transactional</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">updateXXX</span><span class="token punctuation">(</span><span class="token class-name">XXX</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    
+    <span class="token comment">// .......</span>
+
+    <span class="token class-name">TransactionSynchronizationManager</span><span class="token punctuation">.</span><span class="token function">registerSynchronization</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TransactionSynchronizationAdapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterCommit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;事务提交后&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// .......</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="三、transactionaleventlistener" tabindex="-1"><a class="header-anchor" href="#三、transactionaleventlistener" aria-hidden="true">#</a> 三、TransactionalEventListener</h2><h3 id="_3-1-定义事件" tabindex="-1"><a class="header-anchor" href="#_3-1-定义事件" aria-hidden="true">#</a> 3.1 定义事件</h3><p>利用到了spring的事件机制，需要先定义事件：</p><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomTransactionEvent</span> <span class="token keyword">extends</span> <span class="token class-name">ApplicationEvent</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">CustomTransactionEvent</span><span class="token punctuation">(</span><span class="token class-name">Object</span> source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-2-定义listener" tabindex="-1"><a class="header-anchor" href="#_3-2-定义listener" aria-hidden="true">#</a> 3.2 定义listener</h3><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomTransactionListener</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@TransactionalEventListener</span><span class="token punctuation">(</span>
+            <span class="token comment">//监听的事件</span>
+            classes<span class="token operator">=</span><span class="token class-name">CustomTransactionEvent</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span>
+            <span class="token comment">//监听的事务阶段</span>
+            phase <span class="token operator">=</span> <span class="token class-name">TransactionPhase</span><span class="token punctuation">.</span><span class="token constant">AFTER_COMMIT</span><span class="token punctuation">,</span>
+            <span class="token comment">//无事务下是否执行此监听器</span>
+            fallbackExecution <span class="token operator">=</span> <span class="token boolean">true</span>
+    <span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendMess</span><span class="token punctuation">(</span><span class="token class-name">CustomTransactionEvent</span> event<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-3-发布事件" tabindex="-1"><a class="header-anchor" href="#_3-3-发布事件" aria-hidden="true">#</a> 3.3 发布事件</h3><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token annotation punctuation">@Transactional</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">updateXXX</span><span class="token punctuation">(</span><span class="token constant">XXX</span> <span class="token class-name">X</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">var</span> event <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomTransactionEvent</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    applicationEventPublisher<span class="token punctuation">.</span><span class="token function">publishEvent</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div>`,17),o=[p];function c(i,l){return s(),a("div",null,o)}const d=n(t,[["render",c],["__file","监听事务.html.vue"]]);export{d as default};

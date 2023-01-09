@@ -1,0 +1,1 @@
+import{_ as n,V as o,W as a,X as e,Z as l,$ as r,y as s,a0 as c}from"./framework.591e63b2.js";const _={};function i(u,m){const t=s("RouterLink");return o(),a("div",null,[e("ul",null,[e("li",null,[l(t,{to:"/golang/gin%E9%9B%86%E6%88%90prometheus.html"},{default:r(()=>[c("gin集成prometheus")]),_:1})])])])}const f=n(_,[["render",i],["__file","index.html.vue"]]);export{f as default};

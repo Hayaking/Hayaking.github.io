@@ -1,0 +1,38 @@
+import{_ as e,V as t,W as i,X as n,a0 as a,Z as o,Y as p,y as c}from"./framework.591e63b2.js";const l={},r=p(`<h2 id="一、依赖" tabindex="-1"><a class="header-anchor" href="#一、依赖" aria-hidden="true">#</a> 一、依赖</h2><div class="language-groovy line-numbers-mode" data-ext="groovy"><pre class="language-groovy"><code><span class="token function">compile</span><span class="token punctuation">(</span><span class="token interpolation-string"><span class="token string">&quot;org.springframework.boot:spring-boot-starter&quot;</span></span><span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="二、编写配置类" tabindex="-1"><a class="header-anchor" href="#二、编写配置类" aria-hidden="true">#</a> 二、编写配置类</h2><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span><span class="token string">&quot;tosee.gms&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ToSeeGmsProperties</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> domain<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> appId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> appSecret<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> serverUserId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> logDomain<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="三、配置autoconfig类" tabindex="-1"><a class="header-anchor" href="#三、配置autoconfig类" aria-hidden="true">#</a> 三、配置AutoConfig类</h2><p>启用ToSeeGmsProperties类，是的spring能够将配置属性注入进去。</p><p>然后使用读取到的配置信息，组装bean</p><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token annotation punctuation">@Slf4j</span>
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token comment">// 启用ToSeeGmsProperties配置类</span>
+<span class="token annotation punctuation">@EnableConfigurationProperties</span><span class="token punctuation">(</span><span class="token class-name">ToSeeGmsProperties</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GmsAutoConfig</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">ToSeeGmsProperties</span> properties<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">GmsRetryHolder</span> <span class="token function">retryHolder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">GmsRetryHolder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">GMSClient</span> <span class="token function">buildClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>会用到的注解：</p><div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token annotation punctuation">@Conditional</span>：按照一定的条件进行判断，满足条件给容器注册bean
+<span class="token annotation punctuation">@ConditionalOnMissingBean</span>：给定的在bean不存在时<span class="token punctuation">,</span>则实例化当前<span class="token class-name">Bean</span>
+<span class="token annotation punctuation">@ConditionalOnProperty</span>：配置文件中满足定义的属性则创建bean，否则不创建
+<span class="token annotation punctuation">@ConditionalOnBean</span>：给定的在bean存在时<span class="token punctuation">,</span>则实例化当前<span class="token class-name">Bean</span>
+<span class="token annotation punctuation">@ConditionalOnClass</span>： 当给定的类名在类路径上存在，则实例化当前<span class="token class-name">Bean</span>
+<span class="token annotation punctuation">@ConditionalOnMissingClass</span> ：当给定的类名在类路径上不存在，则实例化当前<span class="token class-name">Bean</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="四、创建spring-factories" tabindex="-1"><a class="header-anchor" href="#四、创建spring-factories" aria-hidden="true">#</a> 四、创建spring.factories</h2><p>在resource目录下创建META-INF/spring.factories，内容如下：</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.xxx.GmsAutoConfig
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="五、配置hint" tabindex="-1"><a class="header-anchor" href="#五、配置hint" aria-hidden="true">#</a> 五、配置hint</h2>`,14),d={href:"https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html",target:"_blank",rel:"noopener noreferrer"},u=n("p",null,"配置这个文件可以实现idea自动提示配置的功能",-1);function v(k,m){const s=c("ExternalLinkIcon");return t(),i("div",null,[r,n("p",null,[a("在resource目录下创建META-INF/additional-spring-configuration-metadata.json。内容参考："),n("a",d,[a("https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html"),o(s)])]),u])}const g=e(l,[["render",v],["__file","自定义Stater.html.vue"]]);export{g as default};
